@@ -1,17 +1,21 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AdminAuth } from '@/components/AdminAuth';
-import { storageUtils } from '@/utils/localStorage';
+import { AdminLogin } from '@/components/AdminLogin';
+import { auth } from '@/lib/auth';
 
 export default function Admin() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Se já estiver autenticado, redireciona para o dashboard
-    if (storageUtils.isAdminAuthenticated()) {
-      navigate('/admin/dashboard');
-    }
+    // Verifica se já está autenticado
+    const checkAuth = async () => {
+      const session = await auth.getSession();
+      if (session) {
+        navigate('/admin/dashboard');
+      }
+    };
+    checkAuth();
   }, [navigate]);
 
-  return <AdminAuth />;
+  return <AdminLogin />;
 }

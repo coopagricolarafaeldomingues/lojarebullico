@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Product } from '@/types/product';
 import { ProductCard } from '@/components/ProductCard';
 import { ProductModal } from '@/components/ProductModal';
-import { storageUtils } from '@/utils/localStorage';
+import { productService } from '@/services/productService';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import heroImage from '@/assets/country-hero.jpg';
 
@@ -13,8 +13,11 @@ export default function Store() {
   const [categoryFilter, setCategoryFilter] = useState<string>('todos');
 
   useEffect(() => {
-    const loadedProducts = storageUtils.getProducts();
-    setProducts(loadedProducts);
+    const loadProducts = async () => {
+      const loadedProducts = await productService.getAll();
+      setProducts(loadedProducts);
+    };
+    loadProducts();
   }, []);
 
   const handleProductClick = (product: Product) => {

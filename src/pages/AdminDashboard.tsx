@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Product, ProductFormData } from '@/types/product';
 import { ProductForm } from '@/components/ProductForm';
-import { storageUtils } from '@/utils/localStorage';
+import { productService } from '@/services/productService';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -29,33 +29,40 @@ export default function AdminDashboard() {
     loadProducts();
   }, []);
 
-  const loadProducts = () => {
-    const loadedProducts = storageUtils.getProducts();
+  const loadProducts = async () => {
+    const loadedProducts = await productService.getAll();
     setProducts(loadedProducts);
   };
 
-  const handleSaveProduct = (data: ProductFormData) => {
-    const product: Product = {
-      id: editingProduct?.id || Date.now().toString(),
-      ...data,
-      createdAt: editingProduct?.createdAt || new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-
-    storageUtils.saveProduct(product);
-    toast.success(editingProduct ? 'Produto atualizado!' : 'Produto adicionado!');
+  const handleSaveProduct = async (data: ProductFormData) => {
+    let savedProduct: Product | null;
     
-    setShowForm(false);
-    setEditingProduct(null);
-    loadProducts();
+    if (editingProduct) {
+      savedProduct = await productService.update(editingProduct.id, data);
+    } else {
+      savedProduct = await productService.create(data);
+    }
+    
+    if (savedProduct) {
+      toast.success(editingProduct ? 'Produto atualizado!' : 'Produto adicionado!');
+      setShowForm(false);
+      setEditingProduct(null);
+      loadProducts();
+    } else {
+      toast.error('Erro ao salvar produto');
+    }
   };
 
-  const handleDeleteProduct = () => {
+  const handleDeleteProduct = async () => {
     if (deleteId) {
-      storageUtils.deleteProduct(deleteId);
-      toast.success('Produto removido!');
-      setDeleteId(null);
-      loadProducts();
+      const success = await productService.delete(deleteId);
+      if (success) {
+        toast.success('Produto removido!');
+        setDeleteId(null);
+        loadProducts();
+      } else {
+        toast.error('Erro ao remover produto');
+      }
     }
   };
 
