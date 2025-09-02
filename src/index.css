@@ -8,39 +8,42 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Country/Agro Color Palette */
-    --background: 39 31% 95%;
-    --foreground: 30 20% 13%;
+    /* Rebulliço Brand Colors - CMYK convertido para HSL */
+    /* Cor principal: C:67 M:67 Y:65 K:69 = RGB(25,25,27) = HSL(240 4% 10%) */
+    /* Cor secundária: C:0 M:0 Y:0 K:0 = RGB(255,255,255) = HSL(0 0% 100%) */
+    
+    --background: 0 0% 98%;
+    --foreground: 240 4% 10%;
 
-    --card: 39 25% 92%;
-    --card-foreground: 30 20% 13%;
+    --card: 0 0% 96%;
+    --card-foreground: 240 4% 10%;
 
-    --popover: 39 31% 95%;
-    --popover-foreground: 30 20% 13%;
+    --popover: 0 0% 98%;
+    --popover-foreground: 240 4% 10%;
 
-    /* Marrom couro */
-    --primary: 30 40% 25%;
-    --primary-foreground: 39 31% 95%;
+    /* Cor principal Rebulliço - Cinza escuro/preto */
+    --primary: 240 4% 10%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Bege areia */
-    --secondary: 39 25% 85%;
-    --secondary-foreground: 30 40% 25%;
+    /* Tons de apoio */
+    --secondary: 240 3% 20%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 39 20% 88%;
-    --muted-foreground: 30 15% 45%;
+    --muted: 240 2% 90%;
+    --muted-foreground: 240 3% 35%;
 
-    /* Verde musgo */
-    --accent: 95 20% 35%;
-    --accent-foreground: 39 31% 95%;
+    /* Accent com tom terroso para manter pegada country */
+    --accent: 30 35% 40%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 60% 45%;
-    --destructive-foreground: 39 31% 95%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 30 15% 75%;
-    --input: 30 15% 75%;
-    --ring: 30 40% 25%;
+    --border: 240 3% 85%;
+    --input: 240 3% 85%;
+    --ring: 240 4% 10%;
 
-    /* Country specific design tokens */
+    /* Rebulliço specific design tokens */
     --leather: 25 45% 20%;
     --wheat: 42 60% 70%;
     --sand: 39 31% 85%;
@@ -48,10 +51,10 @@ All colors MUST be HSL.
     --rust: 15 60% 40%;
     --wood: 30 25% 30%;
     
-    /* Gradients */
-    --gradient-country: linear-gradient(135deg, hsl(30 40% 25%), hsl(25 45% 20%));
+    /* Rebulliço Gradients */
+    --gradient-country: linear-gradient(135deg, hsl(240 4% 10%), hsl(240 3% 20%));
     --gradient-sunset: linear-gradient(180deg, hsl(39 60% 70%), hsl(15 60% 50%));
-    --gradient-wood: linear-gradient(180deg, hsl(30 25% 35%), hsl(30 25% 25%));
+    --gradient-wood: linear-gradient(180deg, hsl(240 4% 15%), hsl(240 4% 10%));
     
     /* Shadows */
     --shadow-rustic: 0 4px 20px -2px hsl(30 40% 25% / 0.3);

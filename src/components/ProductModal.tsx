@@ -3,6 +3,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MessageCircle, X } from 'lucide-react';
+import { ShippingCalculator } from '@/components/ShippingCalculator';
 
 interface ProductModalProps {
   product: Product | null;
@@ -95,6 +96,11 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
             <p className="text-sm text-muted-foreground text-center">
               Clique no botão acima para falar conosco e finalizar sua compra
             </p>
+
+            {/* Shipping Calculator */}
+            <div className="pt-4 border-t border-border">
+              <ShippingCalculator />
+            </div>
           </div>
         </div>
       </DialogContent>

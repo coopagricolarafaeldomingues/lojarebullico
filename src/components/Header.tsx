@@ -23,7 +23,7 @@ export function Header() {
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <ShoppingBag className="h-8 w-8 text-wheat" />
-            <h1 className="font-western text-3xl text-wheat tracking-wide">Country Store</h1>
+            <h1 className="font-western text-3xl text-wheat tracking-wide">Rebulliço</h1>
           </Link>
           
           <nav className="flex items-center gap-4">

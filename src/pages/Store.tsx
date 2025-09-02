@@ -39,7 +39,7 @@ export default function Store() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-background/90" />
         <div className="relative container mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
           <h1 className="font-western text-5xl md:text-7xl text-primary-foreground mb-4 drop-shadow-lg">
-            Moda Country
+            Rebulliço
           </h1>
           <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-2xl drop-shadow-md">
             Vista-se com o autêntico estilo agro. Qualidade e tradição em cada peça.
