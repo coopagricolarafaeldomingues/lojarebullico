@@ -25,7 +25,7 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
     const message = encodeURIComponent(
       `Olá! Tenho interesse no produto: ${product.name} - ${formatPrice(product.price)}`
     );
-    const phoneNumber = '5511999999999'; // Substitua pelo número real
+    const phoneNumber = '5542991282300';
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
