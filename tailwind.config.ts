@@ -52,6 +52,13 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// Country theme colors
+				leather: 'hsl(var(--leather))',
+				wheat: 'hsl(var(--wheat))',
+				sand: 'hsl(var(--sand))',
+				moss: 'hsl(var(--moss))',
+				rust: 'hsl(var(--rust))',
+				wood: 'hsl(var(--wood))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -67,6 +74,20 @@ export default {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			fontFamily: {
+				'western': ['Playfair Display', 'Georgia', 'serif'],
+				'body': ['Inter', 'system-ui', 'sans-serif'],
+			},
+			backgroundImage: {
+				'gradient-country': 'var(--gradient-country)',
+				'gradient-sunset': 'var(--gradient-sunset)',
+				'gradient-wood': 'var(--gradient-wood)',
+			},
+			boxShadow: {
+				'rustic': 'var(--shadow-rustic)',
+				'soft': 'var(--shadow-soft)',
+				'elevated': 'var(--shadow-elevated)',
 			},
 			keyframes: {
 				'accordion-down': {
