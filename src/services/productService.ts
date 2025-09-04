@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 import { Product, ProductFormData } from '@/types/product';
 
 export const productService = {
@@ -19,7 +19,7 @@ export const productService = {
       price: item.price,
       description: item.description || '',
       imageUrl: item.image_url || '',
-      category: item.category,
+      category: item.category as 'masculino' | 'feminino' | 'unissex' | 'acessorios',
       inStock: item.in_stock,
       createdAt: item.created_at,
       updatedAt: item.updated_at
@@ -51,7 +51,7 @@ export const productService = {
       price: data.price,
       description: data.description || '',
       imageUrl: data.image_url || '',
-      category: data.category,
+      category: data.category as 'masculino' | 'feminino' | 'unissex' | 'acessorios',
       inStock: data.in_stock,
       createdAt: data.created_at,
       updatedAt: data.updated_at
@@ -84,7 +84,7 @@ export const productService = {
       price: data.price,
       description: data.description || '',
       imageUrl: data.image_url || '',
-      category: data.category,
+      category: data.category as 'masculino' | 'feminino' | 'unissex' | 'acessorios',
       inStock: data.in_stock,
       createdAt: data.created_at,
       updatedAt: data.updated_at
