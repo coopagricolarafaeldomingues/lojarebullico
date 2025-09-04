@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Product } from '@/types/product';
 import { ProductCard } from '@/components/ProductCard';
 import { ProductModal } from '@/components/ProductModal';
 import { productService } from '@/services/productService';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { Lock } from 'lucide-react';
 import heroImage from '@/assets/country-hero.jpg';
 
 export default function Store() {
@@ -47,6 +50,14 @@ export default function Store() {
           <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-2xl drop-shadow-md">
             Vista-se com o autêntico estilo agro. Qualidade e tradição em cada peça.
           </p>
+          
+          {/* Admin Button */}
+          <Link to="/admin" className="mt-6 inline-block">
+            <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+              <Lock className="mr-2 h-4 w-4" />
+              Área Administrativa
+            </Button>
+          </Link>
         </div>
       </div>
 

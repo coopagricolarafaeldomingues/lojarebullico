@@ -10,16 +10,16 @@ export const productService = {
 
     if (error) {
       console.error('Erro ao buscar produtos:', error);
-      return [];
+      throw error;
     }
 
     return data?.map(item => ({
       id: item.id,
       name: item.name,
-      price: item.price,
+      price: Number(item.price),
       description: item.description || '',
       imageUrl: item.image_url || '',
-      category: item.category as 'masculino' | 'feminino' | 'unissex' | 'acessorios',
+      category: item.category as Product['category'],
       inStock: item.in_stock,
       createdAt: item.created_at,
       updatedAt: item.updated_at
@@ -42,16 +42,18 @@ export const productService = {
 
     if (error) {
       console.error('Erro ao criar produto:', error);
-      return null;
+      throw error;
     }
+
+    if (!data) return null;
 
     return {
       id: data.id,
       name: data.name,
-      price: data.price,
+      price: Number(data.price),
       description: data.description || '',
       imageUrl: data.image_url || '',
-      category: data.category as 'masculino' | 'feminino' | 'unissex' | 'acessorios',
+      category: data.category as Product['category'],
       inStock: data.in_stock,
       createdAt: data.created_at,
       updatedAt: data.updated_at
@@ -75,16 +77,18 @@ export const productService = {
 
     if (error) {
       console.error('Erro ao atualizar produto:', error);
-      return null;
+      throw error;
     }
+
+    if (!data) return null;
 
     return {
       id: data.id,
       name: data.name,
-      price: data.price,
+      price: Number(data.price),
       description: data.description || '',
       imageUrl: data.image_url || '',
-      category: data.category as 'masculino' | 'feminino' | 'unissex' | 'acessorios',
+      category: data.category as Product['category'],
       inStock: data.in_stock,
       createdAt: data.created_at,
       updatedAt: data.updated_at
@@ -99,7 +103,7 @@ export const productService = {
 
     if (error) {
       console.error('Erro ao deletar produto:', error);
-      return false;
+      throw error;
     }
 
     return true;
