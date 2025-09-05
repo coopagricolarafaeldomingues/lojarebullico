@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Product } from '@/types/product';
 import { productService } from '@/services/productService';
+import { saleService } from '@/services/saleService';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -92,16 +93,31 @@ export default function PDV() {
     setCheckoutOpen(true);
   };
 
-  const finalizeSale = () => {
-    // Aqui você pode adicionar a lógica para salvar a venda no banco
-    toast({
-      title: "Venda finalizada",
-      description: `Venda de R$ ${calculateTotal().toFixed(2)} finalizada com sucesso!`,
+  const finalizeSale = async () => {
+    const result = await saleService.create({
+      items: cart,
+      total: calculateTotal(),
+      paymentMethod,
+      cashReceived: paymentMethod === 'dinheiro' ? parseFloat(cashReceived) : undefined,
+      changeAmount: paymentMethod === 'dinheiro' ? calculateChange() : undefined,
     });
-    
-    clearCart();
-    setCashReceived('');
-    setCheckoutOpen(false);
+
+    if (result.success) {
+      toast({
+        title: "Venda finalizada",
+        description: `Venda de R$ ${calculateTotal().toFixed(2)} finalizada com sucesso!`,
+      });
+      
+      clearCart();
+      setCashReceived('');
+      setCheckoutOpen(false);
+    } else {
+      toast({
+        title: "Erro ao finalizar venda",
+        description: result.error,
+        variant: "destructive"
+      });
+    }
   };
 
   const filteredProducts = products.filter(product => {

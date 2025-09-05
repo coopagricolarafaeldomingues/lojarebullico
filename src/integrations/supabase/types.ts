@@ -80,6 +80,87 @@ export type Database = {
         }
         Relationships: []
       }
+      sale_items: {
+        Row: {
+          created_at: string
+          id: string
+          product_id: string
+          quantity: number
+          sale_id: string
+          total_price: number
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          product_id: string
+          quantity: number
+          sale_id: string
+          total_price: number
+          unit_price: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          product_id?: string
+          quantity?: number
+          sale_id?: string
+          total_price?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sale_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sale_items_sale_id_fkey"
+            columns: ["sale_id"]
+            isOneToOne: false
+            referencedRelation: "sales"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sales: {
+        Row: {
+          cash_received: number | null
+          change_amount: number | null
+          created_at: string
+          id: string
+          payment_method: string
+          status: string | null
+          total: number
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          cash_received?: number | null
+          change_amount?: number | null
+          created_at?: string
+          id?: string
+          payment_method: string
+          status?: string | null
+          total: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          cash_received?: number | null
+          change_amount?: number | null
+          created_at?: string
+          id?: string
+          payment_method?: string
+          status?: string | null
+          total?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
