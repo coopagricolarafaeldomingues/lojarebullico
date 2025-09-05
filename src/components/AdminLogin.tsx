@@ -55,11 +55,8 @@ export function AdminLogin() {
     <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
       <Card className="w-full max-w-md border-primary/30">
         <CardHeader className="text-center">
-          <CardTitle className="font-western text-3xl text-foreground">
-            Área Administrativa
-          </CardTitle>
           <CardDescription>
-            Faça login ou cadastre-se para gerenciar a loja
+            Faça login ou cadastre-se para gerenciar a lojaaa
           </CardDescription>
         </CardHeader>
         <CardContent>
