@@ -1,8 +1,12 @@
-import { Product } from './product';
+import { Product, ProductVariant } from './product';
 
 export interface CartItem {
-  product: Product;
+  product?: Product; // Mantido para compatibilidade
+  variant: ProductVariant;
   quantity: number;
+  unitPrice: number;
+  discountAmount?: number;
+  discountPercentage?: number;
 }
 
 export interface Sale {

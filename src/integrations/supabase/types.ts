@@ -14,6 +14,146 @@ export type Database = {
   }
   public: {
     Tables: {
+      customers: {
+        Row: {
+          address: string | null
+          created_at: string
+          credit_limit: number | null
+          discount_percentage: number | null
+          document: string | null
+          email: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          credit_limit?: number | null
+          discount_percentage?: number | null
+          document?: string | null
+          email?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          credit_limit?: number | null
+          discount_percentage?: number | null
+          document?: string | null
+          email?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      payment_methods: {
+        Row: {
+          created_at: string
+          fee_percentage: number | null
+          id: string
+          interest_rate: number | null
+          is_active: boolean | null
+          max_installments: number | null
+          name: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          fee_percentage?: number | null
+          id?: string
+          interest_rate?: number | null
+          is_active?: boolean | null
+          max_installments?: number | null
+          name: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          fee_percentage?: number | null
+          id?: string
+          interest_rate?: number | null
+          is_active?: boolean | null
+          max_installments?: number | null
+          name?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      product_variants: {
+        Row: {
+          color: string | null
+          cost_price: number | null
+          created_at: string
+          ean_code: string | null
+          id: string
+          internal_code: string | null
+          is_active: boolean | null
+          manufacturer_code: string | null
+          min_stock: number | null
+          price: number
+          product_id: string
+          size: string | null
+          sku: string
+          stock_quantity: number
+          updated_at: string
+        }
+        Insert: {
+          color?: string | null
+          cost_price?: number | null
+          created_at?: string
+          ean_code?: string | null
+          id?: string
+          internal_code?: string | null
+          is_active?: boolean | null
+          manufacturer_code?: string | null
+          min_stock?: number | null
+          price: number
+          product_id: string
+          size?: string | null
+          sku: string
+          stock_quantity?: number
+          updated_at?: string
+        }
+        Update: {
+          color?: string | null
+          cost_price?: number | null
+          created_at?: string
+          ean_code?: string | null
+          id?: string
+          internal_code?: string | null
+          is_active?: boolean | null
+          manufacturer_code?: string | null
+          min_stock?: number | null
+          price?: number
+          product_id?: string
+          size?: string | null
+          sku?: string
+          stock_quantity?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_variants_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       products: {
         Row: {
           category: string | null
@@ -83,30 +223,39 @@ export type Database = {
       sale_items: {
         Row: {
           created_at: string
+          discount_amount: number | null
+          discount_percentage: number | null
           id: string
           product_id: string
           quantity: number
           sale_id: string
           total_price: number
           unit_price: number
+          variant_id: string | null
         }
         Insert: {
           created_at?: string
+          discount_amount?: number | null
+          discount_percentage?: number | null
           id?: string
           product_id: string
           quantity: number
           sale_id: string
           total_price: number
           unit_price: number
+          variant_id?: string | null
         }
         Update: {
           created_at?: string
+          discount_amount?: number | null
+          discount_percentage?: number | null
           id?: string
           product_id?: string
           quantity?: number
           sale_id?: string
           total_price?: number
           unit_price?: number
+          variant_id?: string | null
         }
         Relationships: [
           {
@@ -123,6 +272,64 @@ export type Database = {
             referencedRelation: "sales"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "sale_items_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "product_variants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sale_payments: {
+        Row: {
+          amount: number
+          created_at: string
+          fee_amount: number | null
+          id: string
+          installment_value: number | null
+          installments: number | null
+          net_amount: number
+          payment_method_id: string
+          sale_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          fee_amount?: number | null
+          id?: string
+          installment_value?: number | null
+          installments?: number | null
+          net_amount: number
+          payment_method_id: string
+          sale_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          fee_amount?: number | null
+          id?: string
+          installment_value?: number | null
+          installments?: number | null
+          net_amount?: number
+          payment_method_id?: string
+          sale_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sale_payments_payment_method_id_fkey"
+            columns: ["payment_method_id"]
+            isOneToOne: false
+            referencedRelation: "payment_methods"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sale_payments_sale_id_fkey"
+            columns: ["sale_id"]
+            isOneToOne: false
+            referencedRelation: "sales"
+            referencedColumns: ["id"]
+          },
         ]
       }
       sales: {
@@ -130,9 +337,18 @@ export type Database = {
           cash_received: number | null
           change_amount: number | null
           created_at: string
+          customer_id: string | null
+          discount_amount: number | null
+          fee_amount: number | null
           id: string
+          is_return: boolean | null
+          net_total: number
+          notes: string | null
+          original_sale_id: string | null
           payment_method: string
+          receipt_number: number
           status: string | null
+          subtotal: number
           total: number
           updated_at: string
           user_id: string | null
@@ -141,9 +357,18 @@ export type Database = {
           cash_received?: number | null
           change_amount?: number | null
           created_at?: string
+          customer_id?: string | null
+          discount_amount?: number | null
+          fee_amount?: number | null
           id?: string
+          is_return?: boolean | null
+          net_total?: number
+          notes?: string | null
+          original_sale_id?: string | null
           payment_method: string
+          receipt_number?: number
           status?: string | null
+          subtotal?: number
           total: number
           updated_at?: string
           user_id?: string | null
@@ -152,14 +377,85 @@ export type Database = {
           cash_received?: number | null
           change_amount?: number | null
           created_at?: string
+          customer_id?: string | null
+          discount_amount?: number | null
+          fee_amount?: number | null
           id?: string
+          is_return?: boolean | null
+          net_total?: number
+          notes?: string | null
+          original_sale_id?: string | null
           payment_method?: string
+          receipt_number?: number
           status?: string | null
+          subtotal?: number
           total?: number
           updated_at?: string
           user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "sales_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sales_original_sale_id_fkey"
+            columns: ["original_sale_id"]
+            isOneToOne: false
+            referencedRelation: "sales"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      stock_movements: {
+        Row: {
+          created_at: string
+          id: string
+          movement_type: string
+          new_stock: number
+          notes: string | null
+          previous_stock: number
+          quantity: number
+          reference_id: string | null
+          user_id: string | null
+          variant_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          movement_type: string
+          new_stock: number
+          notes?: string | null
+          previous_stock: number
+          quantity: number
+          reference_id?: string | null
+          user_id?: string | null
+          variant_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          movement_type?: string
+          new_stock?: number
+          notes?: string | null
+          previous_stock?: number
+          quantity?: number
+          reference_id?: string | null
+          user_id?: string | null
+          variant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stock_movements_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "product_variants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

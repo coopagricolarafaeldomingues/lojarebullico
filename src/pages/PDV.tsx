@@ -33,16 +33,36 @@ export default function PDV() {
   };
 
   const addToCart = (product: Product) => {
-    const existingItem = cart.find(item => item.product.id === product.id);
+    // Criar variant temporário para compatibilidade
+    const tempVariant = {
+      id: product.id,
+      product_id: product.id,
+      sku: `SKU-${product.id}`,
+      price: product.price,
+      stock_quantity: 100,
+      min_stock: 5,
+      is_active: true,
+      created_at: product.createdAt,
+      updated_at: product.updatedAt,
+      product: product
+    };
+    
+    const existingItem = cart.find(item => item.variant?.id === product.id);
     
     if (existingItem) {
       setCart(cart.map(item =>
-        item.product.id === product.id
+        item.variant?.id === product.id
           ? { ...item, quantity: item.quantity + 1 }
           : item
       ));
     } else {
-      setCart([...cart, { product, quantity: 1 }]);
+      setCart([...cart, { 
+        variant: tempVariant,
+        product: product,
+        quantity: 1,
+        unitPrice: product.price,
+        discountAmount: 0
+      }]);
     }
     
     toast({
@@ -51,21 +71,21 @@ export default function PDV() {
     });
   };
 
-  const updateQuantity = (productId: string, quantity: number) => {
+  const updateQuantity = (variantId: string, quantity: number) => {
     if (quantity <= 0) {
-      removeFromCart(productId);
+      removeFromCart(variantId);
       return;
     }
     
     setCart(cart.map(item =>
-      item.product.id === productId
+      item.variant?.id === variantId
         ? { ...item, quantity }
         : item
     ));
   };
 
-  const removeFromCart = (productId: string) => {
-    setCart(cart.filter(item => item.product.id !== productId));
+  const removeFromCart = (variantId: string) => {
+    setCart(cart.filter(item => item.variant?.id !== variantId));
   };
 
   const clearCart = () => {
@@ -73,7 +93,7 @@ export default function PDV() {
   };
 
   const calculateTotal = () => {
-    return cart.reduce((total, item) => total + (item.product.price * item.quantity), 0);
+    return cart.reduce((total, item) => total + ((item.unitPrice - (item.discountAmount || 0)) * item.quantity), 0);
   };
 
   const calculateChange = () => {
