@@ -279,6 +279,13 @@ export type Database = {
             referencedRelation: "product_variants"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "sale_items_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "product_variants_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       sale_payments: {
@@ -455,11 +462,61 @@ export type Database = {
             referencedRelation: "product_variants"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "stock_movements_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "product_variants_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
     }
     Views: {
-      [_ in never]: never
+      product_variants_public: {
+        Row: {
+          color: string | null
+          ean_code: string | null
+          id: string | null
+          in_stock: boolean | null
+          is_active: boolean | null
+          price: number | null
+          product_id: string | null
+          size: string | null
+          sku: string | null
+        }
+        Insert: {
+          color?: string | null
+          ean_code?: string | null
+          id?: string | null
+          in_stock?: never
+          is_active?: boolean | null
+          price?: number | null
+          product_id?: string | null
+          size?: string | null
+          sku?: string | null
+        }
+        Update: {
+          color?: string | null
+          ean_code?: string | null
+          id?: string | null
+          in_stock?: never
+          is_active?: boolean | null
+          price?: number | null
+          product_id?: string | null
+          size?: string | null
+          sku?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_variants_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       [_ in never]: never
