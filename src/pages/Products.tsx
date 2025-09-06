@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Layout } from "@/components/layout/Layout";
 import { Product, ProductFormData } from '@/types/product';
 import { ProductForm } from '@/components/ProductForm';
 import { productService } from '@/services/productService';
@@ -6,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Edit, Trash2, Eye, EyeOff } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye, EyeOff, Package } from 'lucide-react';
 import { toast } from 'sonner';
 import {
   AlertDialog,
@@ -18,12 +19,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useNavigate } from 'react-router-dom';
 
-export default function OldAdminDashboard() {
+export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadProducts();
@@ -78,13 +81,17 @@ export default function OldAdminDashboard() {
     }).format(price);
   };
 
+  const handleManageVariants = (productId: string) => {
+    navigate(`/admin/products/${productId}/variants`);
+  };
+
   return (
-    <div className="min-h-screen bg-background py-8">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="font-western text-4xl text-foreground">
-            Painel Administrativo
-          </h1>
+    <Layout title="Gerenciar Produtos">
+      <div className="space-y-6">
+        <div className="flex justify-between items-center">
+          <p className="text-muted-foreground">
+            Gerencie seus produtos e suas variações
+          </p>
           
           {!showForm && (
             <Button 
@@ -98,7 +105,7 @@ export default function OldAdminDashboard() {
         </div>
 
         {showForm ? (
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl">
             <ProductForm
               product={editingProduct}
               onSave={handleSaveProduct}
@@ -113,8 +120,12 @@ export default function OldAdminDashboard() {
             <CardContent className="p-0">
               {products.length === 0 ? (
                 <div className="text-center py-12">
+                  <Package className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
                   <p className="text-muted-foreground">
-                    Nenhum produto cadastrado. Clique em "Novo Produto" para começar.
+                    Nenhum produto cadastrado.
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Clique em "Novo Produto" para começar.
                   </p>
                 </div>
               ) : (
@@ -124,8 +135,9 @@ export default function OldAdminDashboard() {
                       <TableHead>Imagem</TableHead>
                       <TableHead>Nome</TableHead>
                       <TableHead>Categoria</TableHead>
-                      <TableHead>Preço</TableHead>
+                      <TableHead>Preço Base</TableHead>
                       <TableHead>Status</TableHead>
+                      <TableHead>Variações</TableHead>
                       <TableHead className="text-right">Ações</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -158,6 +170,17 @@ export default function OldAdminDashboard() {
                             {product.inStock ? <Eye className="h-3 w-3 mr-1" /> : <EyeOff className="h-3 w-3 mr-1" />}
                             {product.inStock ? 'Disponível' : 'Indisponível'}
                           </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleManageVariants(product.id)}
+                            className="border-primary/30"
+                          >
+                            <Package className="h-4 w-4 mr-1" />
+                            Gerenciar
+                          </Button>
                         </TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end gap-2">
@@ -208,6 +231,6 @@ export default function OldAdminDashboard() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </Layout>
   );
 }

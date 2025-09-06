@@ -9,6 +9,9 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Admin from "./pages/Admin";
 import AdminDashboard from "./pages/AdminDashboard";
+import Dashboard from "./pages/Dashboard";
+import Products from "./pages/Products";
+import Customers from "./pages/Customers";
 import PDV from "./pages/PDV";
 import NotFound from "./pages/NotFound";
 
@@ -29,7 +32,23 @@ const App = () => (
               path="/admin/dashboard" 
               element={
                 <ProtectedRoute>
-                  <AdminDashboard />
+                  <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/products" 
+              element={
+                <ProtectedRoute>
+                  <Products />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/customers" 
+              element={
+                <ProtectedRoute>
+                  <Customers />
                 </ProtectedRoute>
               } 
             />
